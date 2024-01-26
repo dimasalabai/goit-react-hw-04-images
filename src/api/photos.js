@@ -11,9 +11,11 @@ const instance = axios.create({
 });
 
 export const getAllPhotos = () => {
-  return instance.get(
-    '/?page=1&key=40911679-bf6a368efc1c80da5a9fe2bbd&image_type=photo&orientation=horizontal&per_page=16'
-  );
+  return instance.get('/', {
+    params: {
+      page: 1,
+    },
+  });
 };
 
 export const getSearchPhotos = (q, page = 1) => {
