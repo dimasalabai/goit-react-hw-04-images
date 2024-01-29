@@ -29,7 +29,7 @@ const SearchImages = () => {
         } = await getSearchPhotos(search, page);
 
         setImages(prevImages =>
-          hits?.length ? [...prevImages, ...hits] : images
+          hits?.length ? [...prevImages, ...hits] : prevImages
         );
       } catch (error) {
         setError(error.message);

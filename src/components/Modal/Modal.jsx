@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import styles from './modal.module.css';
@@ -6,17 +6,20 @@ import styles from './modal.module.css';
 const modalRoot = document.getElementById('modal-root');
 
 const Modal = ({ close, children }) => {
-  const closeModal = ({ target, currentTarget, code }) => {
-    if (target === currentTarget || code === 'Escape') {
-      close();
-    }
-  };
+  const closeModal = useCallback(
+    ({ target, currentTarget, code }) => {
+      if (target === currentTarget || code === 'Escape') {
+        close();
+      }
+    },
+    [close]
+  );
 
   useEffect(() => {
-    document.addEventListener('keydown', closeModal);
+    window.addEventListener('keydown', closeModal);
 
-    return () => document.removeEventListener('keydown', closeModal);
-  }, []);
+    return () => window.removeEventListener('keydown', closeModal);
+  }, [closeModal]);
   // якщо з useEffect повертається функція, то він її викликає після розмонтування
 
   return createPortal(
